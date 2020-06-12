@@ -3,7 +3,7 @@ const html = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './client/index.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -12,7 +12,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\jsx?$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -29,9 +29,13 @@ module.exports = {
   },
   devServer: {
     publicPath: '/dist/',
+    contentBase: path.join(__dirname, 'src'),
+    port: 8080,
     proxy: {
-      '/api': 'http://localhost:3000',
+      '/api': {
+        target: 'http://localhost:3000',
+        pathRewrite: {'^/api' : ''}
+      },
     },
-    historyApiFallback: true,
-  }
+  },
 };
