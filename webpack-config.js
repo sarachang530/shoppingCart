@@ -29,13 +29,10 @@ module.exports = {
   },
   devServer: {
     publicPath: '/dist/',
-    contentBase: path.join(__dirname, 'src'),
+    contentBase: path.resolve(__dirname, 'dist'),
     port: 8080,
     proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        pathRewrite: {'^/api' : ''}
-      },
-    },
+      '/': 'http://localhost:3000'
+    }
   },
 };
