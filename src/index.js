@@ -1,2 +1,7 @@
+import React from 'react';
+import { render } from 'react-dom';
 
-console.log("webpack test")
+import App from './components/App';
+
+
+render(<App />, document.getElementById('root'));

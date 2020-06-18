@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production webpack --mode development --open",
+    "build": "NODE_ENV=production webpack",
     "start": "NODE_ENV=production nodemon server/server.js",
     "dev": "NODE_ENV=development nodemon server/server.js & webpack-dev-server --open",
     "prestart": "npm run build"
@@ -22,19 +22,20 @@
   "homepage": "https://github.com/sarachang530/shoppingCart#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "express": "^4.17.1",
     "path": "^0.12.7",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "webpack": "^4.43.0"
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
     "babel-loader": "^8.1.0",
-    "css-loader": "^3.5.3",
+    "css-loader": "^3.6.0",
+    "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.3.0",
-    "express": "^4.17.1",
+    "node-libs-browser": "^2.2.1",
     "nodemon": "^2.0.4",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.1",

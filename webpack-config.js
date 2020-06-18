@@ -1,6 +1,5 @@
 const path = require('path');
-const html = require('html-webpack-plugin');
-const webpack = require('webpack');
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: './src/index.js',
@@ -22,15 +21,29 @@ module.exports = {
         },
       },
       {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader"
+          }
+        ]
+      },
+      {
         test: /\.s[ac]ss$/i,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: './src/index.html',
+      filename: './index.html'
+    })
+  ],
   devServer: {
     publicPath: '/dist/',
-    contentBase: path.resolve(__dirname, 'dist'),
-    port: 8080,
+    contentBase: path.resolve(__dirname, 'src'),
+    historyApiFallback: true,
     proxy: {
       '/': 'http://localhost:3000'
     }
