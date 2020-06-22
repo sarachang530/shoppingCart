@@ -1,5 +1,4 @@
 const path = require('path');
-const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: './src/index.js',
@@ -34,15 +33,9 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: './src/index.html',
-      filename: './index.html'
-    })
-  ],
   devServer: {
     publicPath: '/dist/',
-    contentBase: path.resolve(__dirname, 'src'),
+    contentBase: path.resolve(__dirname, 'dist'),
     historyApiFallback: true,
     proxy: {
       '/': 'http://localhost:3000'
