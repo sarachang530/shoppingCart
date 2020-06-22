@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack",
     "start": "NODE_ENV=production nodemon server/server.js",
-    "dev": "NODE_ENV=development nodemon server/server.js & webpack-dev-server --open",
+    "dev": "NODE_ENV=production nodemon server/server.js & webpack-dev-server --open",
     "prestart": "npm run build"
   },
   "repository": {
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/sarachang530/shoppingCart#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "path": "^0.12.7",
     "react": "^16.13.1",
