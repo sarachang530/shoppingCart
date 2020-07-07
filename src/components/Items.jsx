@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Total from './total.jsx'
 
 const fetchURL =
   'https://gopuff-public.s3.amazonaws.com/dev-assignments/product/order.json?';
@@ -32,20 +33,23 @@ const Items = () => {
   // short circuiting items.cart because its a truthy value and stops there and returns so need to "&&" to continue to search inside obj
   return (
     <div>
-      {console.log('items', items.cart && items.cart.products)}
-      {console.log('products???', products)}
       <ul>
         {items.cart &&
           products &&
           items.cart.products.map(item => (
             <li key={item.id}>
-              {item.id}:
               {
                 products[item.id] && products[item.id].name
               }
+              <img src={products[item.id] && products[item.id].avatar.thumb}/>
+              <div dangerouslySetInnerHTML={{__html: products[item.id] && products[item.id].description}}></div>
+              <Total />
+              <div>price: {products[item.id] && products[item.id].price}</div>
+            
             </li>
           ))}
-        {console.log('productsend', products)}
+        {console.log('products: ', products)}
+        {console.log('items: ', items)}
       </ul>
     </div>
   );
