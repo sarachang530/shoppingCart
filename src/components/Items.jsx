@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Total from './Total.jsx';
+import Button from './Button.jsx';
 
 const fetchURL =
   'https://gopuff-public.s3.amazonaws.com/dev-assignments/product/order.json?';
@@ -14,13 +15,18 @@ const getProducts = productIDs =>
 const Items = () => {
   const [items, setItems] = useState([]);
   const [productInfo, setProductInfo] = useState({});
-  const [total, setTotal] = useState(0);
+  // const [total, setTotal] = useState(0);
   const handleQuantity = (e, product) => {
     event.preventDefault();
+    let newItems = { ...items };
     if (product) {
       product.quantity = e.target.value;
-      setTotal(e.target.value);
+      setItems(newItems);
     }
+  };
+  const handleItemsChange = () => {
+    let newItems = { ...items };
+    setItems(newItems);
   };
 
   useEffect(() => {
@@ -70,12 +76,20 @@ const Items = () => {
                 value={item.quantity}
                 onChange={e => handleQuantity(e, item)}
               ></input>
+              <Button
+                items={items}
+                handleItemsChange={handleItemsChange}
+                item={item}
+              />
             </li>
           ))}
         {console.log('items: ', items)}
       </ul>
 
-      <Total products={items.cart && productInfo && items.cart.products} handleQuantity={handleQuantity} />
+      <Total
+        products={items.cart && productInfo && items.cart.products}
+        handleQuantity={handleQuantity}
+      />
     </div>
   );
 };
