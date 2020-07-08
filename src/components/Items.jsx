@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Total from './total.jsx'
+import Total from './Total.jsx';
 
 const fetchURL =
   'https://gopuff-public.s3.amazonaws.com/dev-assignments/product/order.json?';
@@ -13,13 +13,21 @@ const getProducts = productIDs =>
 
 const Items = () => {
   const [items, setItems] = useState([]);
-  const [products, setProducts] = useState({});
+  const [productInfo, setProductInfo] = useState({});
+  const [total, setTotal] = useState(0);
+  const handleQuantity = (e, product) => {
+    event.preventDefault();
+    if (product) {
+      product.quantity = e.target.value;
+      setTotal(e.target.value);
+    }
+  };
 
   useEffect(() => {
     getItems().then(data => {
       const itemsString = data.cart.products.map(item => item.id).join(',');
       getProducts(itemsString).then(productsdata => {
-        return setProducts(
+        return setProductInfo(
           productsdata.products.reduce((acc, curprod) => {
             acc[curprod.product_id] = curprod;
             return acc;
@@ -32,28 +40,44 @@ const Items = () => {
 
   // short circuiting items.cart because its a truthy value and stops there and returns so need to "&&" to continue to search inside obj
   return (
-    <div>
+    <div className="itemList">
       <ul>
         {items.cart &&
-          products &&
+          productInfo &&
           items.cart.products.map(item => (
             <li key={item.id}>
-              {
-                products[item.id] && products[item.id].name
-              }
-              <img src={products[item.id] && products[item.id].avatar.thumb}/>
-              <div dangerouslySetInnerHTML={{__html: products[item.id] && products[item.id].description}}></div>
-              <Total />
-              <div>price: {products[item.id] && products[item.id].price}</div>
-            
+              {productInfo[item.id] && productInfo[item.id].name}
+              <img
+                src={productInfo[item.id] && productInfo[item.id].avatar.thumb}
+              />
+              <div
+                className="description"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    productInfo[item.id] && productInfo[item.id].description,
+                }}
+              ></div>
+              <div className="discountPrice">
+                {' '}
+                Sale: {item.credit_coupon_price}{' '}
+              </div>
+              <div className="price">
+                price: {productInfo[item.id] && productInfo[item.id].price}
+              </div>
+              quantity:
+              <input
+                type="number"
+                value={item.quantity}
+                onChange={e => handleQuantity(e, item)}
+              ></input>
             </li>
           ))}
-        {console.log('products: ', products)}
         {console.log('items: ', items)}
       </ul>
+
+      <Total products={items.cart && productInfo && items.cart.products} handleQuantity={handleQuantity} />
     </div>
   );
 };
 
 export default Items;
-
